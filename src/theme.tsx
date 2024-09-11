@@ -1,16 +1,32 @@
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
-// custom theme for this app
-const theme = createTheme({
+// custom themes for this app
+
+const commonTheme = createTheme({
+  typography: {
+    // fontSize: 24
+    
+  },
+});
+
+export const lightTheme = createTheme({
+  ...commonTheme,
   palette: {
+    mode: 'light',
+    text: {
+      primary: '#424242',
+    },
+    background: {
+      default: '#FEFEFD',
+    },
     primary: {
-      main: '#FEFEFD',
-      dark: '#424242'
+      main: '#424242',
     },
     secondary: {
-      main: '#424242',
-      dark: '#FEFEFD'
+      main: '#FFCC00',
+      light: '#ffdd00',
+      dark: '#e6b400',
     },
     error: {
       main: red.A400,
@@ -18,4 +34,26 @@ const theme = createTheme({
   },
 });
 
-export default theme;
+export const darkTheme = createTheme({
+  ...commonTheme,
+  palette: {
+    mode: 'dark',
+    text: {
+      primary: '#FEFEFD',
+    },
+    background: {
+      default: '#424242',
+    },
+    primary: {
+      main: '#FEFEFD',
+    },
+    secondary: {
+      main: '#FFCC00',
+      light: '#ffdd00',
+      dark: '#e6b400',
+    },
+    error: {
+      main: red.A400,
+    },
+  },
+});
