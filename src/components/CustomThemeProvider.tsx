@@ -17,7 +17,13 @@ function CustomThemeProvider({ children }: CustomThemeProviderProps) {
       theme={isDarkMode ? darkTheme : lightTheme}
     >
       <CssBaseline />
-      <Container>
+      <Container
+        component='div'
+        sx={{
+          width: '100%',
+          height: '100vh',
+        }}
+      >
         {children}
       </Container>
     </ThemeProvider>
