@@ -4,12 +4,14 @@ import counterReducer from './slices/counterSlice'
 import { pokemonApi } from './APIs/pokemonApi'
 
 import darkThemeReducer from './slices/darkThemeSlice'
+import { firebaseApi } from "./APIs/firebaseApi.ts";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     // Add the generated reducer as a specific top-level slice
     [pokemonApi.reducerPath]: pokemonApi.reducer,
+    [firebaseApi.reducerPath]: firebaseApi.reducer,
 
     darkTheme: darkThemeReducer,
 
@@ -18,7 +20,10 @@ export const store = configureStore({
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(pokemonApi.middleware),
+    getDefaultMiddleware().concat(
+        pokemonApi.middleware,
+        firebaseApi.middleware,
+        ),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
