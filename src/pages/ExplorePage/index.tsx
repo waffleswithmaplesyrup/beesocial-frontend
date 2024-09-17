@@ -1,11 +1,15 @@
-import { useParams } from "react-router-dom";
-
+import { Box, Typography } from '@mui/material';
+import CustomAppBar from '../../components/CustomAppBar';
 function ExplorePage() {
   
   return (
-    <div>
-      explore page 
-    </div>
+    <Box minHeight="100vh" bgcolor="background.default">
+      {/* Custom AppBar */}
+      <CustomAppBar />
+      <Typography variant="h6" color="text.primary">
+        Explore content
+      </Typography>
+    </Box>
   )
 }
 

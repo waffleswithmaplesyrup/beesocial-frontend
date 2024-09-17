@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ExplorePage from "./pages/ExplorePage";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path="/registration" element={<RegistrationPage />} />
       <Route path="/landing" element={<LandingPage />} />
       <Route path="/home" element={<HomePage />} />
+      <Route path="/explore" element={<ExplorePage />} />
       <Route path="/example" element={<ReduxExamples />} />
       <Route path="*" element={<ErrorPage />} />
 
