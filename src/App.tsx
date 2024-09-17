@@ -21,6 +21,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registration" element={<RegistrationPage />} />
+      <Route path="/landing" element={<LandingPage />} />
       <Route path="/example" element={<ReduxExamples />} />
       <Route path="*" element={<ErrorPage />} />
 
