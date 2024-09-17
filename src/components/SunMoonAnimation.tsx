@@ -63,28 +63,45 @@ const SunMoonAnimation: React.FC = () => {
     return (
         <Box
             sx={{
-                position: 'relative',
-                width: '100%',
-                height: '300px',
+                position: 'fixed',
+                width: '100vw',
+                height: '350px',
                 background: bgTheme === THEMES.DARK
                     ? 'linear-gradient(to top, #000033 0%, #333366 100%)' // Night sky
-                    : 'linear-gradient(to top, #87CEEB 0%, #87CEFA 100%)', // Day sky
+                    : 'linear-gradient(to top, #ADD8E6 0%, #FFD1DC 100%)', // Day sky
                 overflow: 'hidden',
                 transition: 'background 2s ease', // Smooth transition for background color
+                left: 0
             }}
         >
-            {/* Sun or Moon */}
+            {/* Halo effect around Sun or Moon */}
             <Box
                 sx={{
                     position: 'absolute',
-                    width: '80px',
-                    height: '80px',
+                    width: '100px', // Slightly larger than the celestial body to create a halo
+                    height: '100px',
                     borderRadius: '50%',
-                    backgroundColor: isSun ? '#FFD700' : '#B0C4DE', // Sun or Moon color
+                    backgroundColor: isSun ? '#FFD700' : '#B0C4DE', // Same color as the sun or moon
                     animation: `${isRising ? sunMoonRise : sunMoonSet} 3s ease`,
                     animationFillMode: 'forwards', // Retain the final state of the animation
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: isSun 
+                        ? '0 0 30px 10px rgba(255, 223, 0, 0.7)' // Sun halo effect
+                        : '0 0 30px 10px rgba(176, 196, 222, 0.7)', // Moon halo effect
                 }}
-            />
+            >
+                {/* Sun or Moon */}
+                <Box
+                    sx={{
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '50%',
+                        backgroundColor: isSun ? '#FFD700' : '#B0C4DE', // Sun or Moon color
+                    }}
+                />
+            </Box>
         </Box>
     );
 };
