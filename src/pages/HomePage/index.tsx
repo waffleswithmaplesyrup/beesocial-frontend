@@ -5,7 +5,7 @@ import CustomAppBar from '../../components/CustomAppBar';
 const HomePage: React.FC = () => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
 
-    const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const handleTabChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
         setSelectedTab(newValue);
     };
 
