@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Typography, Grid, Divider } from '@mui/material';
+import { Box, Button, Typography, Grid } from '@mui/material';
 
 const LandingPage: React.FC = () => {
     return (
