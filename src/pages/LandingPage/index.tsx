@@ -12,7 +12,7 @@ const LandingPage: React.FC = () => {
                     padding={2}
                 >
                     <Typography variant="h5" color="primary">
-                        <img src="/path/to/logo.png" alt="Bee Social Logo" style={{ height: '30px', marginRight: '8px' }} />
+                        <img src="/public/favicon.ico" alt="Bee Social Logo" style={{ height: '30px', marginRight: '8px' }} />
                         Bee Social
                     </Typography>
                     <Box>
