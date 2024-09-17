@@ -7,7 +7,7 @@ function ExplorePage() {
       {/* Custom AppBar */}
       <CustomAppBar />
       <Typography variant="h6" color="text.primary">
-        Explore content
+        Explore page content
       </Typography>
     </Box>
   )
