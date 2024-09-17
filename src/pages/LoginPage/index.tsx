@@ -10,6 +10,7 @@ const LoginPage: React.FC = () => {
     const handleLogin = () => {
         // Handle login logic here
         console.log('Login clicked');
+        navigate('/home');
     };
 
     const handleCreateAccount = () => {
