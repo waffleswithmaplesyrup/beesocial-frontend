@@ -10,7 +10,7 @@ const HomePage: React.FC = () => {
     };
 
     return (
-        <Box minHeight="100vh" bgcolor="background.default">
+        <Box minHeight="100vh" bgcolor="background.default" sx={{ paddingTop: '64px' }}> 
             {/* Custom AppBar */}
             <CustomAppBar />
 
