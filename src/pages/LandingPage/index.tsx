@@ -102,10 +102,10 @@ const LandingPage: React.FC = () => {
 
             {/* AI-Powered Tools Section */}
             <Box padding={4} bgcolor="#f5f5f5">
-                <Typography variant="h4" textAlign="center" gutterBottom>
+                <Typography variant="h4" textAlign="center" color="#424242" gutterBottom>
                     AI-Powered Tools for Smarter Career Growth
                 </Typography>
-                <Typography variant="subtitle1" textAlign="center" color="text.secondary" gutterBottom>
+                <Typography variant="subtitle1" textAlign="center" color="#424242" gutterBottom>
                     Our AI Enhances Your Networking, Job Search, and Content Creation
                 </Typography>
                 <Grid container spacing={4} mt={2}>
@@ -127,10 +127,10 @@ const LandingPage: React.FC = () => {
                         },
                     ].map((tool, index) => (
                         <Grid item xs={12} md={4} key={index}>
-                            <Typography variant="h6" gutterBottom>
+                            <Typography variant="h6" color="#424242" gutterBottom>
                                 {tool.title}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" color="#424242">
                                 {tool.description}
                             </Typography>
                         </Grid>
