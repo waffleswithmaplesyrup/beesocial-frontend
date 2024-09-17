@@ -7,22 +7,22 @@ import { THEMES } from '../redux/slices/darkThemeSlice';
 
 const sunMoonRise = keyframes`
   0% {
-    bottom: -50px;
+    bottom: -100px;
     left: 0%; /* Starting at the 9 o'clock position */
   }
   100% {
-    bottom: 200px; /* Highest point at the 12 o'clock position */
+    bottom: 500px; /* Increase this value to make it rise higher */
     left: 50%; /* Center */
   }
 `;
 
 const sunMoonSet = keyframes`
   0% {
-    bottom: 200px; /* Starting at the 12 o'clock position */
+    bottom: 500px; /* Starting at the higher point */
     left: 50%; /* Center */
   }
   100% {
-    bottom: -50px;
+    bottom: -100px;
     left: 100%; /* Ending at the 3 o'clock position */
   }
 `;
@@ -38,24 +38,16 @@ const SunMoonAnimation: React.FC = () => {
     // Handle theme change
     useEffect(() => {
         if (!isFirstLoad) {
-            // When the theme changes, set the current celestial body first
             setIsRising(false); // Trigger the setting animation
 
-            // Wait for the setting animation to complete
             const timer1 = setTimeout(() => {
-                // After setting, change the background theme
                 setBgTheme(themePreference);
-
-                // Change the celestial body to the new one
                 setIsSun(themePreference === THEMES.LIGHT);
-                
-                // Trigger the rising animation for the new celestial body
                 setIsRising(true);
             }, 3000); // Wait for 3 seconds to complete the setting animation
 
             return () => clearTimeout(timer1);
         } else {
-            // On first load, just rise to the 12 o'clock position
             setIsFirstLoad(false);
         }
     }, [themePreference]);
@@ -65,13 +57,13 @@ const SunMoonAnimation: React.FC = () => {
             sx={{
                 position: 'fixed',
                 width: '100vw',
-                height: '350px',
+                height: '100vh',
                 background: bgTheme === THEMES.DARK
                     ? 'linear-gradient(to top, #000033 0%, #333366 100%)' // Night sky
-                    : 'linear-gradient(to top, #ADD8E6 0%, #FFD1DC 100%)', // Day sky
+                    : 'linear-gradient(to top, #FFD1DC -30%, #1E90FF  100%)', // Day sky
                 overflow: 'hidden',
                 transition: 'background 2s ease', // Smooth transition for background color
-                left: 0
+                left: 0,
             }}
         >
             {/* Halo effect around Sun or Moon */}
@@ -101,7 +93,7 @@ const SunMoonAnimation: React.FC = () => {
                         backgroundColor: isSun ? '#FFD700' : '#B0C4DE', // Sun or Moon color
                     }}
                 />
-            </Box>
+          </Box>
         </Box>
     );
 };
