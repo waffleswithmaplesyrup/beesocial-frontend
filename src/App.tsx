@@ -22,6 +22,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registration" element={<RegistrationPage />} />
       <Route path="/landing" element={<LandingPage />} />
+      <Route path="/home" element={<HomePage />} />
       <Route path="/example" element={<ReduxExamples />} />
       <Route path="*" element={<ErrorPage />} />
 

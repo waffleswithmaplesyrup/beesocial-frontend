@@ -22,7 +22,7 @@ const LandingPage: React.FC = () => {
                     <Button color="primary" onClick={() => navigate('/discover')}>Discover</Button>
                     <Button color="primary" onClick={() => navigate('/connect')}>Connect</Button>
                     <Button color="primary" onClick={() => navigate('/opportunities')}>Opportunities</Button>
-                    <Button variant="outlined" color="secondary" sx={{ marginRight: 1 }} onClick={() => navigate('/login')}>
+                    <Button variant="outlined" color="primary" sx={{ marginRight: 1 }} onClick={() => navigate('/login')}>
                         Log in
                     </Button>
                     <Button variant="contained" color="secondary" onClick={() => navigate('/registration')}>
@@ -51,7 +51,7 @@ const LandingPage: React.FC = () => {
                     <Button variant="contained" color="secondary" sx={{ marginRight: 2 }} onClick={() => navigate('/registration')}>
                         Sign Up Now
                     </Button>
-                    <Button variant="outlined" color="secondary" onClick={() => navigate('/login')}>
+                    <Button variant="outlined" color="primary" onClick={() => navigate('/login')}>
                         Log in
                     </Button>
                 </Box>
