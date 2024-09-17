@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Divider } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 const RegistrationPage: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const navigate = useNavigate();
 
     const handleRegister = () => {
         // Handle registration logic here
@@ -14,6 +16,7 @@ const RegistrationPage: React.FC = () => {
     const handleLogin = () => {
         // Redirect to login page logic
         console.log('Login clicked');
+        navigate('/login');
     };
 
     return (
