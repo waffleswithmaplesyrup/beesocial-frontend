@@ -95,10 +95,10 @@ const CustomAppBar: React.FC = () => {
                     <Box display="flex" alignItems="center">
                         {/* Text Section */}
                         <Box display="flex" flexDirection="column" alignItems="flex-end" mr={1}>
-                            <Typography variant="body2" color="text.primary">
+                            <Typography variant="body2" color="#000">
                                 John Doe
                             </Typography>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" color="#000">
                                 @JohnDoe01
                             </Typography>
                         </Box>
