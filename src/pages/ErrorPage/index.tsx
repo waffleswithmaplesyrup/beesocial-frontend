@@ -5,7 +5,7 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 
 function ErrorPage() {
     const navigate = useNavigate();
-    const [countdown, setCountdown] = useState<number>(3); // Initialize countdown at 2 seconds
+    const [countdown, setCountdown] = useState<number>(3); // Initialize countdown at 3 seconds
 
     useEffect(() => {
         // Set an interval to update the countdown every second
@@ -13,10 +13,10 @@ function ErrorPage() {
             setCountdown(prevCountdown => prevCountdown - 1);
         }, 1000);
 
-        // Navigate back after 2 seconds
+        // Navigate back after 3 seconds
         const timeout = setTimeout(() => {
             navigate(-1);
-        }, 2000);
+        }, 3000);
 
         // Clean up intervals and timeouts when the component unmounts
         return () => {
