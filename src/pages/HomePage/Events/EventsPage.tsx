@@ -1,6 +1,7 @@
 import { useGetAllEventsQuery } from "../../../redux/APIs/eventsAPI"
 import EventCard from "./EventCard"
 import React from "react"
+import { Box } from "@mui/material"
 
 const EventsPage:React.FC = ()=>{
     const {data: events, error, isLoading} = useGetAllEventsQuery();
@@ -9,13 +10,15 @@ const EventsPage:React.FC = ()=>{
 
     return(
         <div>
-            {events?.map((event: any)=>(
-                <div key = {event.eventId}>
-                    <div style={{padding:3}}>
-                    <EventCard text={event.text} eventImage={event.image} userId={event.userId}/>
+            <Box sx={{border:1, borderRadius:'10px', padding: 1}}>
+                {events?.map((event: any)=>(
+                    <div key = {event.eventId}>
+                        <div style={{padding:3}}>
+                        <EventCard text={event.text} eventImage={event.image} userId={event.userId}/>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </Box>
         </div>
     )
 }

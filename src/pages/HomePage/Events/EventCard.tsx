@@ -16,7 +16,7 @@ const EventCard: React.FC<{text: string, eventImage: string, userId:number}> = (
 
     return (
         <div>
-            <Card sx={{ border: '1px solid black', borderRadius: '10px', boxShadow: 'none', padding: 2 }}>
+            <Card sx={{padding: 5, boxShadow:1, borderRadius:'10px'}}>
                 {/* Container for image and name, placed side by side */}
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     {/* Hexagon Image Holder */}
@@ -55,12 +55,12 @@ const EventCard: React.FC<{text: string, eventImage: string, userId:number}> = (
                     </Typography>
                 </Box>
                 {eventText &&(
-                    <Typography marginTop={3} marginBottom={ eventImg? 2:0}>
+                    <Typography marginTop={3} marginLeft={7} marginBottom={ eventImg? 2:0} >
                     {eventText}
                     </Typography>
                 )}
                 {eventImg &&(
-                      <img src={eventImg} width='100%'/>
+                      <img src={eventImg} width='90%' style={{ marginLeft: 55}}/>
                 )}
             </Card>
         </div>
