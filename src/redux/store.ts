@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import counterReducer from './slices/counterSlice'
 import { pokemonApi } from './APIs/pokemonApi'
+import { eventsApi } from './APIs/eventsAPI.ts'
 
 import darkThemeReducer from './slices/darkThemeSlice'
 import { firebaseApi } from "./APIs/firebaseApi.ts";
@@ -12,6 +13,7 @@ export const store = configureStore({
     // Add the generated reducer as a specific top-level slice
     [pokemonApi.reducerPath]: pokemonApi.reducer,
     [firebaseApi.reducerPath]: firebaseApi.reducer,
+    [eventsApi.reducerPath]: eventsApi.reducer,
 
     darkTheme: darkThemeReducer,
 
@@ -23,6 +25,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat(
         pokemonApi.middleware,
         firebaseApi.middleware,
+        eventsApi.middleware,
         ),
 })
 
