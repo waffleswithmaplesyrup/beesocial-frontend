@@ -55,7 +55,7 @@ const EventCard: React.FC<{text: string, eventImage: string, userId:number}> = (
                     </Typography>
                 </Box>
                 {eventText &&(
-                    <Typography marginTop={3} marginLeft={7} marginBottom={ eventImg? 2:0} >
+                    <Typography marginTop={3} marginLeft={7} marginBottom={ eventImg? 2:0} style={{ whiteSpace: 'pre-wrap' }}>
                     {eventText}
                     </Typography>
                 )}

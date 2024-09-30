@@ -32,7 +32,7 @@ interface User {
       }),
       postEvent: builder.mutation<Event, Partial<Event>>({
         query:(newEvent)=>({
-            url: '',
+            url: '/events',
             method: 'POST',
             body: newEvent,
         }),
