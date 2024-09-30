@@ -8,6 +8,17 @@ interface Event {
     timestamp: string;  // LocalDateTime can be converted to a string
     isEdited: boolean;
   }
+interface User {
+    userId: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+    profilePhoto: string;
+    username: string
+    role: string;
+}
 
   export const eventsApi = createApi({
     reducerPath: 'eventsApi',
@@ -16,7 +27,10 @@ interface Event {
       getAllEvents: builder.query<Event[], void>({
         query: () => '',
       }),
+      getUserById: builder.query<User, number>({
+        query:(id)=>`/user/${id}`
+      })
     }),
   });
   
-  export const { useGetAllEventsQuery } = eventsApi;
+  export const { useGetAllEventsQuery, useGetUserByIdQuery } = eventsApi;

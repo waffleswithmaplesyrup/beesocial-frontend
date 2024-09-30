@@ -12,7 +12,7 @@ const EventsPage:React.FC = ()=>{
             {events?.map((event: any)=>(
                 <div key = {event.eventId}>
                     <div style={{padding:3}}>
-                    <EventCard text={event.text}/>
+                    <EventCard text={event.text} eventImage={event.image} userId={event.userId}/>
                     </div>
                 </div>
             ))}

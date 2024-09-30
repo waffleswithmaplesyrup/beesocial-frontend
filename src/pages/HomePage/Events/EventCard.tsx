@@ -1,14 +1,18 @@
 import { Image } from "@mui/icons-material";
 import { Card, Box, Typography } from "@mui/material";
 import React from "react";
+import { useGetUserByIdQuery } from "../../../redux/APIs/eventsAPI";
 
 
-const EventCard: React.FC<{text: string}> = ({text}) => {
-    const profilePic = "https://media.allure.com/photos/649ca84564be53f2d2c8e9dc/1:1/w_1378,h_1378,c_limit/henry%20cavill%20salt-and-pepper%20era.jpg";
-    const name = "Henry Cavill"
-    const username = "@HenbeeCavill"
+const EventCard: React.FC<{text: string, eventImage: string, userId:number}> = ({text, eventImage, userId}) => {
+    const {data: user, error, isLoading} = useGetUserByIdQuery(userId);
+    if(isLoading) return <p>Loading...</p>
+    if(error) return <p>Error loading user</p>
+    const profilePic = user?.profilePhoto
+    const name = user?.firstName+" "+user?.lastName
+    const username = user?.username
     const eventText = text
-    const eventImg = "https://nus.edu.sg/cfg/images/default-source/events-attachment/fdm-presents-introduction-to-sql-october-edm-2023.png?sfvrsn=5644f4ea_2"
+    const eventImg = eventImage
 
     return (
         <div>
