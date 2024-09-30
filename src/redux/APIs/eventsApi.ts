@@ -29,8 +29,15 @@ interface User {
       }),
       getUserById: builder.query<User, number>({
         query:(id)=>`/user/${id}`
+      }),
+      postEvent: builder.mutation<Event, Partial<Event>>({
+        query:(newEvent)=>({
+            url: '',
+            method: 'POST',
+            body: newEvent,
+        }),
       })
     }),
   });
   
-  export const { useGetAllEventsQuery, useGetUserByIdQuery } = eventsApi;
+  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation } = eventsApi;
