@@ -16,7 +16,6 @@ interface User {
     phoneNumber: string;
     password: string;
     profilePhoto: string;
-    username: string
     role: string;
 }
 

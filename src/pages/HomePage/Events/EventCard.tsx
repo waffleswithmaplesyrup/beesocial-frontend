@@ -10,7 +10,6 @@ const EventCard: React.FC<{text: string, eventImage: string, userId:number}> = (
     if(error) return <p>Error loading user</p>
     const profilePic = user?.profilePhoto
     const name = user?.firstName+" "+user?.lastName
-    const username = user?.username
     const eventText = text
     const eventImg = eventImage
 
@@ -49,9 +48,6 @@ const EventCard: React.FC<{text: string, eventImage: string, userId:number}> = (
                     </Box>
                     <Typography variant="body1" color="text.primary" fontWeight="bold">
                         {name}
-                    </Typography>
-                    <Typography marginLeft={3} color="grey">
-                        {username}
                     </Typography>
                 </Box>
                 {eventText &&(
