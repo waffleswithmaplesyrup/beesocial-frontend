@@ -29,14 +29,24 @@ interface User {
       getUserById: builder.query<User, number>({
         query:(id)=>`/user/${id}`
       }),
-      postEvent: builder.mutation<Event, Partial<Event>>({
-        query:(newEvent)=>({
+      postEvent: builder.mutation<Event, FormData>({
+        query: (formData) => ({
             url: '/events',
             method: 'POST',
-            body: newEvent,
-        }),
+            body: formData,
+        })
+      }),
+      getImage: builder.query<string, string>({
+        query: (filename)=>({
+            url:`/getImage`,
+            method:'GET',
+            params:{
+                image: filename,
+            },
+            responseHandler: (response) => response.blob().then(blob => URL.createObjectURL(blob)),
+        })
       })
     }),
   });
   
-  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation } = eventsApi;
+  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation, useGetImageQuery } = eventsApi;
