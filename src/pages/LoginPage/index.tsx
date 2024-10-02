@@ -10,7 +10,8 @@ const LoginPage: React.FC = () => {
         email: '',
         password: '',
     });
-    const { data: getUserResponse, error: getUserErrorResponse, isLoading } = useGetUserByEmailQuery(loginRequest.email);
+    const [skip, setSkip] = useState(true);
+    const { data: getUserResponse, error: getUserErrorResponse, isLoading } = useGetUserByEmailQuery(loginRequest.email, { skip });
     const [loginUser] = useLoginUserMutation();
     const navigate = useNavigate();
 
@@ -20,19 +21,24 @@ const LoginPage: React.FC = () => {
             if (response.status === 200) {
                 // Store token in localStorage
                 localStorage.setItem('token', response.token);
-                // Check if getUserResponse is available
-                if (getUserResponse) {
-                    // Serialize and store user data in localStorage
-                    localStorage.setItem('user', JSON.stringify(getUserResponse));
-                }
-                // Navigate to the home page after login
-                navigate('/home');
+
+                // Request User
+                setSkip(false);
             }
         } catch (error) {
             console.log(error);
         }
-
     };
+
+    // Handle after user data is fetched
+    if (getUserResponse) {
+        // Store user data in localStorage
+        localStorage.setItem('user', JSON.stringify(getUserResponse));
+        console.log("User, " + getUserResponse.email + ", successfully logged in");
+
+        // Navigate to the home page after successful login and user data fetch
+        navigate('/home');
+    }
 
     const handleCreateAccount = () => {
         // Redirect to create account page logic

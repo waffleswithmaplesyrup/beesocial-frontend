@@ -29,8 +29,10 @@ const CustomAppBar: React.FC = () => {
     };
 
     function handleLogout() {
+        const user = JSON.parse(localStorage.getItem('user'));
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        console.log("User, " + user.email + ", has logged out");
         navigate('/login');
     }
 

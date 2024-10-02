@@ -24,7 +24,7 @@ export const userApi = createApi({
     }),
     endpoints: (builder) => ({
         getUserByEmail: builder.query<GetUserResponse, string> ({
-            query: (userRequest) => `users?email=${userRequest}`,
+            query: (email) => `user?email=${email}`,
         }),
     }),
 });
