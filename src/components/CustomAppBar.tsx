@@ -28,6 +28,12 @@ const CustomAppBar: React.FC = () => {
         handleMenuClose();
     };
 
+    function handleLogout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        navigate('/login');
+    }
+
     return (
         <AppBar position="fixed" sx={{ backgroundColor: '#FFCC00', width: '100vw', left: 0 }}>
             <Toolbar>
@@ -116,7 +122,7 @@ const CustomAppBar: React.FC = () => {
                         >
                             <MenuItem onClick={() => handleMenuItemClick('/profile')}>Profile</MenuItem>
                             <MenuItem onClick={() => handleMenuItemClick('/settings')}>Settings</MenuItem>
-                            <MenuItem onClick={() => handleMenuItemClick('/landing')}>Logout</MenuItem>
+                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>
                     </Box>
                 </Box>

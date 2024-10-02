@@ -1,16 +1,37 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { LoginRequest } from "../../types/authTypes.ts";
+import { useLoginUserMutation } from "../../redux/APIs/authApi.ts";
+import { useGetUserByEmailQuery } from "../../redux/APIs/userApi.ts";
 
 const LoginPage: React.FC = () => {
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [loginRequest, setLoginRequest] = useState<LoginRequest>({
+        email: '',
+        password: '',
+    });
+    const { data: getUserResponse, error: getUserErrorResponse, isLoading } = useGetUserByEmailQuery(loginRequest.email);
+    const [loginUser] = useLoginUserMutation();
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        // Handle login logic here
-        console.log('Login clicked');
-        navigate('/home');
+    const handleLogin = async () => {
+        try {
+            const response = await loginUser(loginRequest).unwrap();
+            if (response.status === 200) {
+                // Store token in localStorage
+                localStorage.setItem('token', response.token);
+                // Check if getUserResponse is available
+                if (getUserResponse) {
+                    // Serialize and store user data in localStorage
+                    localStorage.setItem('user', JSON.stringify(getUserResponse));
+                }
+                // Navigate to the home page after login
+                navigate('/home');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
     };
 
     const handleCreateAccount = () => {
@@ -43,8 +64,8 @@ const LoginPage: React.FC = () => {
                         fullWidth
                         margin="normal"
                         placeholder="user@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={loginRequest.email}
+                        onChange={(e) => setLoginRequest({ ...loginRequest, email: e.target.value })}
                     />
                     <TextField
                         label="Password"
@@ -52,8 +73,8 @@ const LoginPage: React.FC = () => {
                         fullWidth
                         margin="normal"
                         placeholder="********"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={loginRequest.password}
+                        onChange={(e) => setLoginRequest({ ...loginRequest, password: e.target.value })}
                     />
                     <Button
                         variant="contained"
