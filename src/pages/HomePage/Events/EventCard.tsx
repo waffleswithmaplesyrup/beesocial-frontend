@@ -1,6 +1,6 @@
 import { Card, Box, Typography } from "@mui/material";
 import React from "react";
-import { useGetUserByIdQuery, useGetImageQuery } from "../../../redux/APIs/eventsAPI";
+import { useGetUserByIdQuery, useGetImageQuery } from "../../../redux/APIs/eventsApi";
 
 const EventCard: React.FC<{ text: string, eventImage: string | null, userId: number }> = ({ text, eventImage, userId }) => {
   const { data: user, error: userError, isLoading: userLoading } = useGetUserByIdQuery(userId);

@@ -1,4 +1,4 @@
-import { useGetAllEventsQuery, useGetUserByIdQuery } from "../../../redux/APIs/eventsAPI";
+import { useGetAllEventsQuery, useGetUserByIdQuery } from "../../../redux/APIs/eventsApi";
 import EventCard from "./EventCard";
 import React from "react";
 import { Box } from "@mui/material";
@@ -8,7 +8,7 @@ const EventsPage: React.FC = () => {
     // Hooks for fetching events and user data
     const { data: events, error: eventsError, isLoading: eventsLoading, refetch } = useGetAllEventsQuery();
 
-    const userId = 1; // Example logged-in userId
+    const userId = 2; // Example logged-in userId
     const { data: user, error: userError, isLoading: userLoading } = useGetUserByIdQuery(userId);
 
     // Conditional rendering based on the loading and error states

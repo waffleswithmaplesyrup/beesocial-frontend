@@ -3,7 +3,7 @@ import { Image } from "@mui/icons-material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from "react";
-import { useGetUserByIdQuery, usePostEventMutation } from "../../../redux/APIs/eventsAPI";
+import { useGetUserByIdQuery, usePostEventMutation } from "../../../redux/APIs/eventsApi";
 
 const EventsPost: React.FC<{ userId: number, refetchEvents: () => void }> = ({ userId, refetchEvents }) => {
   const { data: user, error, isLoading } = useGetUserByIdQuery(userId);
