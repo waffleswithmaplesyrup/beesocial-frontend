@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import counterReducer from './slices/counterSlice'
+import { eventsApi } from './APIs/eventsApi.ts'
 import darkThemeReducer from './slices/darkThemeSlice'
 import { pokemonApi } from './APIs/pokemonApi'
 import { authApi } from "./APIs/authApi.ts";
@@ -11,6 +12,7 @@ export const store = configureStore({
     counter: counterReducer,
     // Add the generated reducer as a specific top-level slice
     [pokemonApi.reducerPath]: pokemonApi.reducer,
+    [eventsApi.reducerPath]: eventsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
 
@@ -22,6 +24,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
         pokemonApi.middleware,
+        eventsApi.middleware,
         authApi.middleware,
         userApi.middleware,
         ),
