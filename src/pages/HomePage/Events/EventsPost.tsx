@@ -75,7 +75,8 @@ const handlePostEvent = async () => {
         setSnackbarOpen(true);
         refetchEvents(); // Refetch events after successful post
     } catch (error) {
-        setSnackbarMessage('Error posting event');
+        console.log(error)
+        setSnackbarMessage('Error: '+error.data);
         setSnackbarSeverity('error');
         setSnackbarOpen(true);
     }
