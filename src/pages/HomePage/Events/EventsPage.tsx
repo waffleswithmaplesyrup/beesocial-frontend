@@ -8,7 +8,9 @@ const EventsPage: React.FC = () => {
     // Hooks for fetching events and user data
     const { data: events, error: eventsError, isLoading: eventsLoading, refetch } = useGetAllEventsQuery();
 
-    const userId = 2; // Example logged-in userId
+    const storedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
+
+    const userId = storedUser.userId; // Example logged-in userId
     const { data: user, error: userError, isLoading: userLoading } = useGetUserByIdQuery(userId);
 
     // Conditional rendering based on the loading and error states
