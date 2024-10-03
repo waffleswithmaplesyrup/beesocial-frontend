@@ -1,4 +1,4 @@
-import { Modal, Box, Paper,TableContainer, TableHead, Table, TableRow, TableCell, TableBody } from '@mui/material'
+import { Modal, Box, Paper,TableContainer, TableHead, Table, TableRow, TableCell, TableBody, Typography } from '@mui/material'
 import { useGetApplicantByIdQuery } from '../../../redux/APIs/eventsApi';
 
 type OnCloseHandler = (event: React.SyntheticEvent<{}, Event>, reason: "backdropClick" | "escapeKeyDown") => void;
@@ -20,6 +20,14 @@ const ViewAttendeesModal: React.FC<{eventId: number, open: boolean, onClose: OnC
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            {applicants.length === 0 && (
+                                <TableRow>
+                                    <Box padding={3}>
+                                        <Typography sx={{ display:'flex', fontStyle:'italic', fontSize:17, justifyContent:'center'}}>Looks Like Our Hive Is Quiet🐝</Typography>
+                                        <Typography sx={{display:'flex', color:'grey', fontSize:14, justifyContent:'center'}}>No Applicants Yet.</Typography>
+                                    </Box>
+                                </TableRow>
+                            )}
                             {applicants?.map((applicant)=>(
                                 <TableRow key={applicant.userId}>
                                     <TableCell>
