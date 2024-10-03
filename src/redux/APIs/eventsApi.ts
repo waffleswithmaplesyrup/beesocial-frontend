@@ -46,6 +46,16 @@ interface User {
             body: formData,
         })
       }),
+      postAddApplicant: builder.mutation<void, {eventId:number, userId:number}>({
+        query: ({eventId, userId}) =>({
+          url: '/addApplicant',
+          method: "POST",
+          params:{
+            eventId: eventId,
+            userId: userId
+          }
+        })
+      }),
       getImage: builder.query<string, string>({
         query: (filename)=>({
             url:`/getImage`,
@@ -55,8 +65,11 @@ interface User {
             },
             responseHandler: (response) => response.blob().then(blob => URL.createObjectURL(blob)),
         })
-      })
+      }),
+      getApplicantById: builder.query<User[], number>({
+        query:(id)=>`/applied/${id}`
+      }),
     }),
   });
   
-  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation, useGetImageQuery } = eventsApi;
+  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation, useGetImageQuery, usePostAddApplicantMutation, useGetApplicantByIdQuery } = eventsApi;

@@ -31,7 +31,7 @@ const EventsPage: React.FC = () => {
             <Box sx={{ border: 1, borderRadius: '10px', padding: 1 }}>
                 {events?.map((event: any) => (
                     <div key={event.eventId} style={{ padding: 3 }}>
-                        <EventCard text={event.text} eventImage={event.image} userId={event.userId} />
+                        <EventCard text={event.text} eventImage={event.image} userId={event.userId} eventId={event.eventId} />
                     </div>
                 ))}
             </Box>
