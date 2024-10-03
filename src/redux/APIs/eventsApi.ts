@@ -21,7 +21,17 @@ interface User {
 
   export const eventsApi = createApi({
     reducerPath: 'eventsApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8084' }),
+    baseQuery: fetchBaseQuery({ 
+      baseUrl: 'http://localhost:8080/event-management-service',
+      prepareHeaders: (headers) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            headers.set('Authorization', `Bearer ${token}`);
+        }
+        return headers;
+    },
+    
+    }),
     endpoints: (builder) => ({
       getAllEvents: builder.query<Event[], void>({
         query: () => '',
