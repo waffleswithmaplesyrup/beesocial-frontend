@@ -1,18 +1,7 @@
 import { Modal, Box, Paper,TableContainer, TableHead, Table, TableRow, TableCell, TableBody } from '@mui/material'
-import { useGetApplicantByIdQuery, useGetUserByIdQuery } from '../../../redux/APIs/eventsApi';
+import { useGetApplicantByIdQuery } from '../../../redux/APIs/eventsApi';
 
 type OnCloseHandler = (event: React.SyntheticEvent<{}, Event>, reason: "backdropClick" | "escapeKeyDown") => void;
-
-interface User {
-    userId: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    password: string;
-    profilePhoto: string;
-    role: string;
-}
 
 const ViewAttendeesModal: React.FC<{eventId: number, open: boolean, onClose: OnCloseHandler}> =({eventId, open, onClose})=>{
 

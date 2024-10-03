@@ -20,7 +20,7 @@ const EventCard: React.FC<{ text: string, eventImage: string | null, userId: num
 
   const[openModal, setOpenModal] = useState(false)
   const handleOpenModal = ()=>setOpenModal(true)
-  const handleCloseModal: OnCloseHandler = (event, reason) => {
+  const handleCloseModal: OnCloseHandler = (reason) => {
     console.log('Modal closed due to:', reason);
     setOpenModal(false);
   };
