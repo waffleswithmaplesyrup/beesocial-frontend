@@ -4,6 +4,7 @@ import { useGetUserByIdQuery, useGetImageQuery, usePostAddApplicantMutation, use
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import ViewAttendeesModal from "./ViewAttendeesModal";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 type OnCloseHandler = (event: React.SyntheticEvent<{}, Event>, reason: "backdropClick" | "escapeKeyDown") => void;
 
@@ -119,14 +120,21 @@ const EventCard: React.FC<{ text: string, eventImage: string | null, userId: num
         )}
        
         {storedUser.userId !== userId ?(
-          <Box sx={{display:'flex', justifyContent:'flex-end', paddingTop:2}}>
-            <Button
-            variant="contained"
-              color="secondary"
-              onClick={handleJoinEvent}
-            >
-              {isJoining? 'Joining...' : 'Join'}
-            </Button>
+          <Box sx={{display:'flex', justifyContent: 'space-between', alignItems:'center'}}>
+            <Box sx={{justifyContent:'flex-start'}}>
+              <Button>
+                <ThumbUpIcon/>
+              </Button>
+            </Box>
+            <Box sx={{justifyContent:'flex-end', paddingTop:2}}>
+              <Button
+              variant="contained"
+                color="secondary"
+                onClick={handleJoinEvent}
+              >
+                {isJoining? 'Joining...' : 'Join'}
+              </Button>
+            </Box>
           </Box>
         ):(
           <Box sx={{display:'flex', justifyContent:'flex-end', paddingTop:2}}>
