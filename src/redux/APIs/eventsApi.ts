@@ -69,14 +69,20 @@ interface User {
       getApplicantById: builder.query<User[], number>({
         query:(id)=>`/applied/${id}`
       }),
-      putEditEventById: builder.query<Event, number>({
-        query:(eventId)=>({
+      putEditEventById: builder.mutation<Event, Event>({
+        query:({eventId, ...updatedEvent})=>({
           url:`/${eventId}`,
           method: 'PUT',
-          body: Event
+          body: updatedEvent
         })
       }),
+      deleteEventById: builder.mutation<string, number>({
+        query:(eventId)=>({
+          url: `/${eventId}`,
+          method:'DELETE'
+        })
+      })
     }),
   });
   
-  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation, useGetImageQuery, usePostAddApplicantMutation, useGetApplicantByIdQuery, usePutEditEventByIdQuery } = eventsApi;
+  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation, useGetImageQuery, usePostAddApplicantMutation, useGetApplicantByIdQuery, usePutEditEventByIdMutation, useDeleteEventByIdMutation } = eventsApi;
