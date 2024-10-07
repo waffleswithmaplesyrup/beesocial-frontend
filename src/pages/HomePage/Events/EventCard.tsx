@@ -22,7 +22,7 @@ const EventCard: React.FC<{ text: string, eventImage: string, userId: number, ev
   const storedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
   const [postApplicant, {isLoading: isJoining}] = usePostAddApplicantMutation();
 
-  const [deleteEvent, {isLoading: isDeleting}] = useDeleteEventByIdMutation();
+  const [deleteEvent] = useDeleteEventByIdMutation();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false); // Snackbar visibility
   const [snackbarMessage, setSnackbarMessage] = useState(''); // Snackbar message
@@ -221,24 +221,6 @@ const EventCard: React.FC<{ text: string, eventImage: string, userId: number, ev
               <MoreHorizIcon/>
             </Button>
           </Box>
-          // <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-          //   <Box sx={{justifyContent:'flex-start'}}>
-          //     <Button onClick={()=>{
-          //       {!isEditing ? setIsEditing(true) : setIsEditing(false)}
-          //     }}>
-          //       <EditIcon/>
-          //     </Button>
-          //   </Box>
-          //   <Box sx={{justifyContent:'flex-end', paddingTop:2}}>
-          //     <Button
-          //       variant="contained"
-          //       color="secondary"
-          //       onClick={handleOpenModal}
-          //     >
-          //       Attendees
-          //     </Button>
-          //   </Box>
-          // </Box>
         )}
       </Card>
       <Snackbar
