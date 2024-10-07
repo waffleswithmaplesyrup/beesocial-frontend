@@ -16,7 +16,7 @@ const ViewAttendeesModal: React.FC<{eventId: number, open: boolean, onClose: OnC
                     <Table sx={{minWidth:50}}>
                     <TableHead>
                             <TableRow>
-                                <TableCell colSpan={3} align="center">Attendees</TableCell>
+                                <TableCell colSpan={4} align="center">Attendees</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -61,6 +61,7 @@ const ViewAttendeesModal: React.FC<{eventId: number, open: boolean, onClose: OnC
                                     </TableCell>
                                     <TableCell>{applicant.firstName} {applicant.lastName}</TableCell>
                                     <TableCell>{applicant.role}</TableCell>
+                                    <TableCell>{applicant.email}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
