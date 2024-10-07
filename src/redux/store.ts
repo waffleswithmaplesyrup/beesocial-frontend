@@ -6,6 +6,7 @@ import darkThemeReducer from './slices/darkThemeSlice'
 import { pokemonApi } from './APIs/pokemonApi'
 import { authApi } from "./APIs/authApi.ts";
 import { userApi } from "./APIs/userApi.ts";
+import { contentApi } from './APIs/contentApi.ts'
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     [eventsApi.reducerPath]: eventsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [contentApi.reducerPath]: contentApi.reducer,
 
     darkTheme: darkThemeReducer,
   },
@@ -27,6 +29,7 @@ export const store = configureStore({
         eventsApi.middleware,
         authApi.middleware,
         userApi.middleware,
+        contentApi.middleware,
         ),
 })
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Tabs, Tab, Typography } from '@mui/material';
 import CustomAppBar from '../../components/CustomAppBar';
 import EventsPage from './Events/EventsPage';
+import ForYouPage from './ForYou/ForYouPage';
 
 const HomePage: React.FC = () => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
@@ -27,9 +28,10 @@ const HomePage: React.FC = () => {
             {/* Tab Content */}
             <Box padding={3}>
                 {selectedTab === 0 && (
-                    <Typography variant="h6" color="text.primary">
-                        For You content
-                    </Typography>
+                    // <Typography variant="h6" color="text.primary">
+                    //     For You content
+                    // </Typography>
+                    <ForYouPage />
                 )}
                 {selectedTab === 1 && (
                     <>
