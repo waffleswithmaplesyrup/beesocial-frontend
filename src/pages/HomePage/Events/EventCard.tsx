@@ -1,4 +1,4 @@
-import { Card, Box, Typography, Button, Snackbar, IconButton, MenuList, MenuItem, ListItemIcon, Paper, ListItemText, Menu } from "@mui/material";
+import { Card, Box, Typography, Button, Snackbar, IconButton, MenuList, MenuItem, ListItemIcon, Paper, ListItemText } from "@mui/material";
 import React, { useState } from "react";
 import { useGetUserByIdQuery, useGetImageQuery, usePostAddApplicantMutation, useGetApplicantByIdQuery, useDeleteEventByIdMutation } from "../../../redux/APIs/eventsApi";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -105,7 +105,9 @@ const EventCard: React.FC<{ text: string, eventImage: string, userId: number, ev
       setSnackbarMessage(`Event Has Been Deleted`)
       setSnackbarSeverity('success')
       setSnackbarOpen(true)
-      refetchEvents()
+      setTimeout(() => {
+        refetchEvents();
+      }, 1000);
     }catch (error){
       setSnackbarMessage(`Error Deleting Event`)
       setSnackbarSeverity('error')
@@ -151,7 +153,7 @@ const EventCard: React.FC<{ text: string, eventImage: string, userId: number, ev
             {name}
           </Typography>
           {edited && (
-            <Box sx={{marginLeft: 'auto' }}>
+            <Box sx={{marginLeft: 'auto'}}>
               <Typography sx={{color:'grey'}}>Edited</Typography>
             </Box>
           )}

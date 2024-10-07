@@ -31,7 +31,7 @@ const EditEvent:React.FC<{eventId:number; userId:number; currentImage: string; c
 
 
     return(
-        <Box>
+        <Box sx={{padding: 3}}>
             <TextField
             multiline
             label="Update Statement Here"
