@@ -69,7 +69,14 @@ interface User {
       getApplicantById: builder.query<User[], number>({
         query:(id)=>`/applied/${id}`
       }),
+      putEditEventById: builder.query<Event, number>({
+        query:(eventId)=>({
+          url:`/${eventId}`,
+          method: 'PUT',
+          body: Event
+        })
+      }),
     }),
   });
   
-  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation, useGetImageQuery, usePostAddApplicantMutation, useGetApplicantByIdQuery } = eventsApi;
+  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation, useGetImageQuery, usePostAddApplicantMutation, useGetApplicantByIdQuery, usePutEditEventByIdQuery } = eventsApi;

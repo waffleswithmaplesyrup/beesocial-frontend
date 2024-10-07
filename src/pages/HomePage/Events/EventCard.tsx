@@ -5,12 +5,15 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import ViewAttendeesModal from "./ViewAttendeesModal";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import EditIcon from '@mui/icons-material/Edit';
+import EditEvent from "./EditEvent";
 
 type OnCloseHandler = (event: React.SyntheticEvent<{}, Event>, reason: "backdropClick" | "escapeKeyDown") => void;
 
 const EventCard: React.FC<{ text: string, eventImage: string | null, userId: number, eventId: number }> = ({ text, eventImage, userId, eventId }) => {
   const { data: user, error: userError, isLoading: userLoading } = useGetUserByIdQuery(userId); // this is the user in the event
   const { refetch: refetchApplicants } = useGetApplicantByIdQuery(eventId);
+  const [isEditing, setIsEditing] = useState(false)
   
   const storedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
   const [postApplicant, {isLoading: isJoining}] = usePostAddApplicantMutation();
@@ -71,6 +74,15 @@ const EventCard: React.FC<{ text: string, eventImage: string | null, userId: num
 
   const handleSnackbarClose=()=> setSnackbarOpen(false)
 
+  const handleLike=()=>{
+    if(storedUser){
+      console.log(storedUser.userId+' liked event '+eventId)
+      setSnackbarMessage(`You have liked ${name}'s post`)
+      setSnackbarSeverity('success')
+      setSnackbarOpen(true)
+    }
+  }
+
   return (
     <Box>
       <Card sx={{ padding: 5, boxShadow: 1, borderRadius: '10px' }}>
@@ -118,11 +130,15 @@ const EventCard: React.FC<{ text: string, eventImage: string | null, userId: num
         {shouldFetchImage && imageUrl && (
           <img src={imageUrl} width="90%" style={{ marginLeft: 55 }} alt="Event" />
         )}
+
+        {isEditing && (
+          <EditEvent eventId={eventId} />
+        )}
        
         {storedUser.userId !== userId ?(
           <Box sx={{display:'flex', justifyContent: 'space-between', alignItems:'center'}}>
             <Box sx={{justifyContent:'flex-start'}}>
-              <Button>
+              <Button onClick={handleLike}>
                 <ThumbUpIcon/>
               </Button>
             </Box>
@@ -137,14 +153,23 @@ const EventCard: React.FC<{ text: string, eventImage: string | null, userId: num
             </Box>
           </Box>
         ):(
-          <Box sx={{display:'flex', justifyContent:'flex-end', paddingTop:2}}>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleOpenModal}
-            >
-              Attendees
-            </Button>
+          <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+            <Box sx={{justifyContent:'flex-start'}}>
+              <Button onClick={()=>{
+                {!isEditing ? setIsEditing(true) : setIsEditing(false)}
+              }}>
+                <EditIcon/>
+              </Button>
+            </Box>
+            <Box sx={{justifyContent:'flex-end', paddingTop:2}}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleOpenModal}
+              >
+                Attendees
+              </Button>
+            </Box>
           </Box>
         )}
       </Card>
