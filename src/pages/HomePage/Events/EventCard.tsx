@@ -1,16 +1,20 @@
-import { Card, Box, Typography, Button, Snackbar, IconButton } from "@mui/material";
+import { Card, Box, Typography, Button, Snackbar, IconButton, MenuList, MenuItem, ListItemIcon, Paper, ListItemText, Menu } from "@mui/material";
 import React, { useState } from "react";
-import { useGetUserByIdQuery, useGetImageQuery, usePostAddApplicantMutation, useGetApplicantByIdQuery } from "../../../redux/APIs/eventsApi";
+import { useGetUserByIdQuery, useGetImageQuery, usePostAddApplicantMutation, useGetApplicantByIdQuery, useDeleteEventByIdMutation } from "../../../redux/APIs/eventsApi";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import ViewAttendeesModal from "./ViewAttendeesModal";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import EditIcon from '@mui/icons-material/Edit';
+import PeopleIcon from '@mui/icons-material/People';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import EditEvent from "./EditEvent";
 
 type OnCloseHandler = (event: React.SyntheticEvent<{}, Event>, reason: "backdropClick" | "escapeKeyDown") => void;
 
-const EventCard: React.FC<{ text: string, eventImage: string | null, userId: number, eventId: number }> = ({ text, eventImage, userId, eventId }) => {
+const EventCard: React.FC<{ text: string, eventImage: string, userId: number, eventId: number, refetchEvents: ()=>void, edited:boolean }> = ({ text, eventImage, userId, eventId, refetchEvents, edited }) => {
   const { data: user, error: userError, isLoading: userLoading } = useGetUserByIdQuery(userId); // this is the user in the event
   const { refetch: refetchApplicants } = useGetApplicantByIdQuery(eventId);
   const [isEditing, setIsEditing] = useState(false)
@@ -18,12 +22,19 @@ const EventCard: React.FC<{ text: string, eventImage: string | null, userId: num
   const storedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
   const [postApplicant, {isLoading: isJoining}] = usePostAddApplicantMutation();
 
+  const [deleteEvent, {isLoading: isDeleting}] = useDeleteEventByIdMutation();
+
   const [snackbarOpen, setSnackbarOpen] = useState(false); // Snackbar visibility
   const [snackbarMessage, setSnackbarMessage] = useState(''); // Snackbar message
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
 
+  const[isOptionOpen, setIsOptionOpen] = useState(false);
+
   const[openModal, setOpenModal] = useState(false)
-  const handleOpenModal = ()=>setOpenModal(true)
+  const handleOpenModal = ()=>{
+    setIsOptionOpen(false)
+    setOpenModal(true)
+  }
   const handleCloseModal: OnCloseHandler = (reason) => {
     console.log('Modal closed due to:', reason);
     setOpenModal(false);
@@ -50,7 +61,7 @@ const EventCard: React.FC<{ text: string, eventImage: string | null, userId: num
     try{
       await  postApplicant({eventId, userId:storedUser.userId}).unwrap()
       console.log (`${storedUser.firstName} ${storedUser.lastName} joined the event with ID: ${eventId}`)
-      setSnackbarMessage(`Successfully joined ${storedUser.firstName} ${storedUser.lastName}'Event`)
+      setSnackbarMessage(`Successfully joined ${name}'s Event`)
       setSnackbarSeverity('success')
       setSnackbarOpen(true)
       refetchApplicants()
@@ -80,6 +91,26 @@ const EventCard: React.FC<{ text: string, eventImage: string | null, userId: num
       setSnackbarMessage(`You have liked ${name}'s post`)
       setSnackbarSeverity('success')
       setSnackbarOpen(true)
+    }
+  }
+
+  const handleEdit=()=>{
+    setIsEditing(true)
+    setIsOptionOpen(false)
+  }
+
+  const handleDelete=async()=>{
+    try{
+      await deleteEvent(eventId).unwrap()
+      setSnackbarMessage(`Event Has Been Deleted`)
+      setSnackbarSeverity('success')
+      setSnackbarOpen(true)
+      refetchEvents()
+    }catch (error){
+      setSnackbarMessage(`Error Deleting Event`)
+      setSnackbarSeverity('error')
+      setSnackbarOpen(true)
+      console.log(error)
     }
   }
 
@@ -119,20 +150,24 @@ const EventCard: React.FC<{ text: string, eventImage: string | null, userId: num
           <Typography variant="body1" color="text.primary" fontWeight="bold">
             {name}
           </Typography>
+          {edited && (
+            <Box sx={{marginLeft: 'auto' }}>
+              <Typography sx={{color:'grey'}}>Edited</Typography>
+            </Box>
+          )}
         </Box>
 
         {text && (
-          <Typography marginTop={3} marginLeft={7} marginBottom={eventImage ? 2 : 0} style={{ whiteSpace: 'pre-wrap' }}>
+          <Typography marginTop={3} marginLeft={7} marginBottom={eventImage ? 2 : 0} style={{ whiteSpace: 'pre-wrap', overflow: 'auto', maxWidth: '90%', maxHeight:'90%'}}>
             {text}
           </Typography>
+        )}
+        {isEditing &&(
+          <EditEvent eventId={eventId} userId={userId} currentText={text} currentImage={eventImage} refetchEvents={refetchEvents} setIsEditing={setIsEditing} setSnackbarMessage={setSnackbarMessage} setSnackbarSeverity={setSnackbarSeverity} setSnackbarOpen={setSnackbarOpen}/>
         )}
 
         {shouldFetchImage && imageUrl && (
           <img src={imageUrl} width="90%" style={{ marginLeft: 55 }} alt="Event" />
-        )}
-
-        {isEditing && (
-          <EditEvent eventId={eventId} />
         )}
        
         {storedUser.userId !== userId ?(
@@ -153,24 +188,55 @@ const EventCard: React.FC<{ text: string, eventImage: string | null, userId: num
             </Box>
           </Box>
         ):(
-          <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-            <Box sx={{justifyContent:'flex-start'}}>
-              <Button onClick={()=>{
-                {!isEditing ? setIsEditing(true) : setIsEditing(false)}
-              }}>
-                <EditIcon/>
-              </Button>
-            </Box>
-            <Box sx={{justifyContent:'flex-end', paddingTop:2}}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleOpenModal}
-              >
-                Attendees
-              </Button>
-            </Box>
+          <Box sx={{display:'flex', justifyContent:'flex-end', alignItems:'start'}}>
+            {isOptionOpen && (
+              <Paper>
+                <MenuList>
+                  <MenuItem onClick={handleOpenModal}>
+                    <ListItemIcon>
+                      <PeopleIcon/>
+                    </ListItemIcon>
+                    <ListItemText>Attendees</ListItemText>
+                  </MenuItem>
+                  <MenuItem onClick={handleEdit}>
+                    <ListItemIcon>
+                      <EditIcon/>
+                    </ListItemIcon>
+                    <ListItemText>Edit Event</ListItemText>
+                  </MenuItem>
+                  <MenuItem onClick={handleDelete}>
+                    <ListItemIcon>
+                      <DeleteIcon/>
+                    </ListItemIcon>
+                    <ListItemText>
+                      Delete Event
+                    </ListItemText>
+                  </MenuItem>
+                </MenuList>
+              </Paper>
+            )}
+            <Button onClick={()=>{{!isOptionOpen? setIsOptionOpen(true):setIsOptionOpen(false)}}}>
+              <MoreHorizIcon/>
+            </Button>
           </Box>
+          // <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+          //   <Box sx={{justifyContent:'flex-start'}}>
+          //     <Button onClick={()=>{
+          //       {!isEditing ? setIsEditing(true) : setIsEditing(false)}
+          //     }}>
+          //       <EditIcon/>
+          //     </Button>
+          //   </Box>
+          //   <Box sx={{justifyContent:'flex-end', paddingTop:2}}>
+          //     <Button
+          //       variant="contained"
+          //       color="secondary"
+          //       onClick={handleOpenModal}
+          //     >
+          //       Attendees
+          //     </Button>
+          //   </Box>
+          // </Box>
         )}
       </Card>
       <Snackbar
