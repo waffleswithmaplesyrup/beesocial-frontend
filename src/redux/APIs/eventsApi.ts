@@ -46,6 +46,16 @@ interface User {
             body: formData,
         })
       }),
+      postAddApplicant: builder.mutation<void, {eventId:number, userId:number}>({
+        query: ({eventId, userId}) =>({
+          url: '/addApplicant',
+          method: "POST",
+          params:{
+            eventId: eventId,
+            userId: userId
+          }
+        })
+      }),
       getImage: builder.query<string, string>({
         query: (filename)=>({
             url:`/getImage`,
@@ -55,8 +65,24 @@ interface User {
             },
             responseHandler: (response) => response.blob().then(blob => URL.createObjectURL(blob)),
         })
+      }),
+      getApplicantById: builder.query<User[], number>({
+        query:(id)=>`/applied/${id}`
+      }),
+      putEditEventById: builder.mutation<Event, Event>({
+        query:({eventId, ...updatedEvent})=>({
+          url:`/${eventId}`,
+          method: 'PUT',
+          body: updatedEvent
+        })
+      }),
+      deleteEventById: builder.mutation<string, number>({
+        query:(eventId)=>({
+          url: `/${eventId}`,
+          method:'DELETE'
+        })
       })
     }),
   });
   
-  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation, useGetImageQuery } = eventsApi;
+  export const { useGetAllEventsQuery, useGetUserByIdQuery, usePostEventMutation, useGetImageQuery, usePostAddApplicantMutation, useGetApplicantByIdQuery, usePutEditEventByIdMutation, useDeleteEventByIdMutation } = eventsApi;
