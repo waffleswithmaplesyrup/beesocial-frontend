@@ -1,16 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// export interface Content {
-//     contentId: number;
-//     text: string;
-//     image: string;
-//     timestamp: string;  // LocalDateTime can be converted to a string
-//     repostedContent: Content | null;
-//     userId: number;
-//     firstName: string;
-//     lastName: string;
-//     profilePhoto: string;
-//   }
+export interface ImagePath {
+    imagePath: string;
+  }
 
   export const imageApi = createApi({
     reducerPath: 'imageApi',
@@ -26,6 +18,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
     
     }),
     endpoints: (builder) => ({
+      uploadImage: builder.mutation<ImagePath, FormData>({
+        query: (formData) => ({
+          url: '/uploadImage',
+          method: 'POST',
+          body: formData,
+        })
+      }),
       getImage: builder.query<string, string>({
         query: (filename)=>({
           url:`/getImage`,
@@ -39,4 +38,4 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
     }),
   });
   
-  export const { useGetImageQuery } = imageApi;
+  export const { useGetImageQuery, useUploadImageMutation } = imageApi;

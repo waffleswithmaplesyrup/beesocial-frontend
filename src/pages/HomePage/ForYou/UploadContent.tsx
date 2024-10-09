@@ -4,6 +4,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from "react";
 import { useCreateContentMutation } from "../../../redux/APIs/contentApi";
+import { useUploadImageMutation } from "../../../redux/APIs/imageApi";
 
 interface UserInfo {
   userId: number,
@@ -16,8 +17,8 @@ const UploadContent: React.FC<{ userInfo: UserInfo, refetchContent: () => void }
 
   const userId = userInfo.userId;
   
-  // const { data: user, error, isLoading } = useGetUserByIdQuery(userId);
   const [postContent, { isLoading: isPosting }] = useCreateContentMutation();
+  const [uploadImage, { isLoading: isUploading }] = useUploadImageMutation();
 
   const [text, setText] = useState(''); // State for the input text
   const [image, setImage] = useState<File | null>(null); // State for the selected image
@@ -25,9 +26,6 @@ const UploadContent: React.FC<{ userInfo: UserInfo, refetchContent: () => void }
   const [snackbarOpen, setSnackbarOpen] = useState(false); // Snackbar visibility
   const [snackbarMessage, setSnackbarMessage] = useState(''); // Snackbar message
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success'); // Snackbar severity
-
-  // if (isLoading) return <p>Loading...</p>;
-  // if (error) return <p>Error loading user</p>;
 
   const profilePic = userInfo?.profilePhoto;
 
@@ -53,41 +51,45 @@ const UploadContent: React.FC<{ userInfo: UserInfo, refetchContent: () => void }
     if (!text.trim() && !image) return; // Prevent posting if both are empty
 
     try {
-        // Create FormData instance
-        const formData = new FormData();
-        const eventPayload = {
-            userId, // assuming userId is available
-            text: text.trim() || "", // Use empty string if text is not provided
-        };
+      // Create FormData instance
+      const formData = new FormData();
+      const contentPayload = {
+        userId, // assuming userId is available
+        text: text.trim() || "", // Use empty string if text is not provided
+      };
 
-        // Append the content data as a JSON string
-        formData.append('content', new Blob([JSON.stringify(eventPayload)], { type: 'application/json' }));
+      // Append the image file if selected
+      if (image) {
+        formData.append('image', image);
+        // upload image returning the image path
+        const data = await uploadImage(formData).unwrap();
+        // add image path to contentPayload
+        contentPayload.image = data.imagePath;
 
-        // Append the image file if selected
-        if (image) {
-            formData.append('image', image);
-        }
+        // remove image from formData
+        formData.delete("image");
+      }
 
-        for (const [key, value] of formData.entries()) {
-            console.log(key, value);
-        }
+      // Append the content data as a JSON string
+      formData.append('content', new Blob([JSON.stringify(contentPayload)], { type: 'application/json' }));
 
-        // Call the mutation to post the content
-        await postContent(formData).unwrap();
+      // Call the mutation to post the content
+      await postContent(formData).unwrap();
 
-        // Clear input fields after successful post
-        setText('');
-        setImage(null);
-        setPreviewImage(null);
+      // Clear input fields after successful post
+      setText('');
+      setImage(null);
+      setPreviewImage(null);
 
-        setSnackbarMessage('Successfully Posted');
-        setSnackbarSeverity('success');
-        setSnackbarOpen(true);
-        refetchContent(); // Refetch content after successful post
+      setSnackbarMessage('Successfully Posted');
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
+      refetchContent(); // Refetch content after successful post
     } catch (error) {
-        setSnackbarMessage('Error posting content');
-        setSnackbarSeverity('error');
-        setSnackbarOpen(true);
+      console.log(error);
+      setSnackbarMessage('Error posting content');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
     }
   }; 
 
@@ -160,9 +162,9 @@ const UploadContent: React.FC<{ userInfo: UserInfo, refetchContent: () => void }
             variant="contained"
             color="secondary"
             onClick={handlePostContent}
-            disabled={isPosting || (!text.trim() && !image)}
+            disabled={isPosting || isUploading || (!text.trim() && !image)}
           >
-            {isPosting ? 'Posting...' : 'Post'}
+            {isPosting || isUploading ? 'Posting...' : 'Post'}
           </Button>
         </Box>
       </Card>

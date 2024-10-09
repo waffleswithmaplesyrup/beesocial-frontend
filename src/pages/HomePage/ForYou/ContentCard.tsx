@@ -18,7 +18,7 @@ const ContentCard: React.FC<{ content: Content }> = ({ content }) => {
 
   const profilePic = content.profilePhoto;
   const name = content.firstName + " " + content.lastName;
-  console.log("image url: ", imageUrl);
+  
   return (
     <div>
       <Card sx={{ padding: 5, boxShadow: 1, borderRadius: '10px' }}>
