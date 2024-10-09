@@ -2,9 +2,8 @@ import { Card, Box, Typography } from "@mui/material";
 import React from "react";
 import { useGetImageQuery } from "../../../redux/APIs/imageApi";
 import { Content } from "../../../redux/APIs/contentApi";
-// import { useGetUserByIdQuery, useGetImageQuery } from "../../../redux/APIs/eventsApi";
 
-const ContentCard: React.FC<{ content: Content, text: string, contentImage: string | null, userId: number }> = ({ content, text, contentImage, userId }) => {
+const ContentCard: React.FC<{ content: Content }> = ({ content }) => {
   // const { data: user, error: userError, isLoading: userLoading } = useGetUserByIdQuery(userId);
 
   // Conditionally determine if we should fetch the image, and ensure the contentImage is a string
@@ -59,7 +58,7 @@ const ContentCard: React.FC<{ content: Content, text: string, contentImage: stri
         </Box>
 
         {content.text && (
-          <Typography marginTop={3} marginLeft={7} marginBottom={contentImage ? 2 : 0} style={{ whiteSpace: 'pre-wrap' }}>
+          <Typography marginTop={3} marginLeft={7} marginBottom={content.image ? 2 : 0} style={{ whiteSpace: 'pre-wrap' }}>
             {content.text}
           </Typography>
         )}

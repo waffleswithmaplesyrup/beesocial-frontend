@@ -30,7 +30,7 @@ function ForYouPage() {
       <Box sx={{ border: 1, borderRadius: '10px', padding: 1 }}>
           {contentList?.map((content: Content) => (
             <div key={content.contentId} style={{ padding: 3 }}>
-              <ContentCard content={content} text={content.text} contentImage={content.image} userId={content.userId} />
+              <ContentCard content={content} />
             </div>
           ))}
       </Box>
