@@ -7,6 +7,7 @@ import { pokemonApi } from './APIs/pokemonApi'
 import { authApi } from "./APIs/authApi.ts";
 import { userApi } from "./APIs/userApi.ts";
 import { contentApi } from './APIs/contentApi.ts'
+import { imageApi } from './APIs/imageApi.ts'
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [contentApi.reducerPath]: contentApi.reducer,
+    [imageApi.reducerPath]: imageApi.reducer,
 
     darkTheme: darkThemeReducer,
   },
@@ -30,6 +32,7 @@ export const store = configureStore({
         authApi.middleware,
         userApi.middleware,
         contentApi.middleware,
+        imageApi.middleware,
         ),
 })
 

@@ -28,12 +28,12 @@ function ForYouPage() {
       <UploadContent userInfo={storedUser} refetchContent={refetch} />
       {/* Display the contents */}
       <Box sx={{ border: 1, borderRadius: '10px', padding: 1 }}>
-                {contentList?.map((content: Content) => (
-                    <div key={content.contentId} style={{ padding: 3 }}>
-                        <ContentCard text={content.text} contentImage={content.image} userId={content.userId} />
-                    </div>
-                ))}
-            </Box>
+          {contentList?.map((content: Content) => (
+            <div key={content.contentId} style={{ padding: 3 }}>
+              <ContentCard content={content} text={content.text} contentImage={content.image} userId={content.userId} />
+            </div>
+          ))}
+      </Box>
     </div>
   )
 }
