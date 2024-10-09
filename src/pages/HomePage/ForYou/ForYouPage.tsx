@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import UploadContent from "./UploadContent"
 import { Box } from "@mui/material";
 import { Content, useGetAllContentQuery } from "../../../redux/APIs/contentApi";
-import ContentCard from "./ContentCart";
+import ContentCard from "./ContentCard";
 
 function ForYouPage() {
 
