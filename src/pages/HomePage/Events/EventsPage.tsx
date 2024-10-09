@@ -8,6 +8,8 @@ const EventsPage: React.FC = () => {
     // Hooks for fetching events and user data
     const { data: events, error: eventsError, isLoading: eventsLoading, refetch } = useGetAllEventsQuery();
 
+    console.log(events)
+
     const storedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
 
     const userId = storedUser.userId; // Example logged-in userId
@@ -31,7 +33,7 @@ const EventsPage: React.FC = () => {
             <Box sx={{ border: 1, borderRadius: '10px', padding: 1 }}>
                 {events?.map((event: any) => (
                     <div key={event.eventId} style={{ padding: 3 }}>
-                        <EventCard text={event.text} eventImage={event.image} userId={event.userId} />
+                        <EventCard text={event.text} eventImage={event.image} userId={event.userId} eventId={event.eventId} refetchEvents={refetch} edited={event.edited}/>
                     </div>
                 ))}
             </Box>
