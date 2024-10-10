@@ -111,6 +111,20 @@ const LoginPage: React.FC = () => {
         setSnackbarOpen(false);
     };
 
+    function handleEmployeeFill() {
+        setLoginRequest({
+            email: "harry.potter@fdmgroup.com",
+            password: "password"
+        });
+    }
+
+    function handleHRFill() {
+        setLoginRequest({
+            email: "henrycavill@fdmgroup.com",
+            password: "password"
+        });
+    }
+
     return (
             <Box
                 display="flex"
@@ -166,6 +180,32 @@ const LoginPage: React.FC = () => {
                     >
                         Log in
                     </Button>
+
+                    <div
+                        style={{
+                        display: 'flex',
+                        justifyContent: 'space-between', // Equal space between buttons
+                        alignItems: 'center',             // Vertically center the buttons
+                        width: '100%',                    // Ensure div takes full width
+                    }}>
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            sx={{ marginTop: 2, marginBottom: 2, width: '47%' }}
+                            onClick={handleEmployeeFill}
+                        >
+                            Employee
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            sx={{ marginTop: 2, marginBottom: 2, width: '47%' }}
+                            onClick={handleHRFill}
+                        >
+                            HR
+                        </Button>
+                    </div>
+
                     <Divider sx={{ width: '100%', marginBottom: 2 }} />
                     <Button
                         variant="contained"
