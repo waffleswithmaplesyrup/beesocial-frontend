@@ -1,23 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-interface Event {
-    eventId: number;
-    userId: number;
-    text: string;
-    image: string;
-    timestamp: string;  // LocalDateTime can be converted to a string
-    isEdited: boolean;
-  }
-interface User {
-    userId: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    password: string;
-    profilePhoto: string;
-    role: string;
-}
+import { Event, User } from "../../types/types.ts";
 
   export const eventsApi = createApi({
     reducerPath: 'eventsApi',
