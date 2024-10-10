@@ -1,14 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-interface GetUserResponse {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    password: string;
-    role: string;
-    profilePhoto: string;
-}
+import { User } from "../../types/types.ts";
 
 export const userApi = createApi({
     reducerPath: 'userApi',
@@ -23,7 +14,7 @@ export const userApi = createApi({
         },
     }),
     endpoints: (builder) => ({
-        getUserByEmail: builder.query<GetUserResponse, string> ({
+        getUserByEmail: builder.query<User, string> ({
             query: (email) => `user?email=${email}`,
         }),
     }),
