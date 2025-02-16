@@ -1,20 +1,26 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import counterReducer from './slices/counterSlice'
-import { pokemonApi } from './APIs/pokemonApi'
-
+import { eventsApi } from './APIs/eventsApi.ts'
 import darkThemeReducer from './slices/darkThemeSlice'
-import { firebaseApi } from "./APIs/firebaseApi.ts";
+import { pokemonApi } from './APIs/pokemonApi'
+import { authApi } from "./APIs/authApi.ts";
+import { userApi } from "./APIs/userApi.ts";
+import { contentApi } from './APIs/contentApi.ts'
+import { imageApi } from './APIs/imageApi.ts'
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     // Add the generated reducer as a specific top-level slice
     [pokemonApi.reducerPath]: pokemonApi.reducer,
-    [firebaseApi.reducerPath]: firebaseApi.reducer,
+    [eventsApi.reducerPath]: eventsApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [contentApi.reducerPath]: contentApi.reducer,
+    [imageApi.reducerPath]: imageApi.reducer,
 
     darkTheme: darkThemeReducer,
-
   },
 
   // Adding the api middleware enables caching, invalidation, polling,
@@ -22,7 +28,11 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
         pokemonApi.middleware,
-        firebaseApi.middleware,
+        eventsApi.middleware,
+        authApi.middleware,
+        userApi.middleware,
+        contentApi.middleware,
+        imageApi.middleware,
         ),
 })
 
